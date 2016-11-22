@@ -1,7 +1,7 @@
 package com.demo.subscription.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demo.subscription.model.MessageType;
 import com.demo.subscription.model.Subscription;
 import com.demo.subscription.repo.MessageTypeRepository;
 import com.demo.subscription.repo.SubscriptionRepository;
@@ -44,25 +43,17 @@ public class SubscriptionController {
     public List<SubscriptionResourse> list() {
     	
     	List<Subscription> list = repository.findAll();
-    	List<SubscriptionResourse> resources = new ArrayList<>();
-    	
-    	for (Subscription subscription : list) {
-    		SubscriptionResourse resourse = new SubscriptionResourse(subscription);
-    		resources.add(resourse);
-    	}
+    	List<SubscriptionResourse> resources = list.stream().map(SubscriptionResourse::new).collect(Collectors.toList());
     	
     	return resources;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public SubscriptionResourse add(@RequestBody List<Long> messageTypeIds) {
+    public SubscriptionResourse register(@RequestBody List<Long> messageTypeIds) {
     	
     	Subscription subscription = new Subscription();
     	
-    	for (Long id : messageTypeIds) {
-    		MessageType messageType = messageTypeRepository.findOne(id);
-    		subscription.addMessageType(messageType);
-    	}
+    	messageTypeIds.stream().map(messageTypeRepository::findOne).forEach(subscription::addMessageType);
     	
     	repository.save(subscription);
     	
@@ -78,10 +69,7 @@ public class SubscriptionController {
     	subscription.removeSubscriptionMessageTypes();
     	repository.saveAndFlush(subscription);
     	
-    	for (Long messageTypeId : messageTypeIds) {
-    		MessageType messageType = messageTypeRepository.findOne(messageTypeId);
-    		subscription.addMessageType(messageType);
-    	}
+    	messageTypeIds.stream().map(messageTypeRepository::findOne).forEach(subscription::addMessageType);
     	
     	repository.save(subscription);
     	

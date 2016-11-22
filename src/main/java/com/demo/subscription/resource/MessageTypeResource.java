@@ -15,6 +15,7 @@ public class MessageTypeResource extends ResourceSupport {
 
 	public MessageTypeResource(final MessageType messageType, int messageCount) {
 		this.messageType = messageType;
+		this.messageCount = messageCount;
 		
 		Link detail = linkTo(MessageTypeController.class).slash(getTypeId()).withSelfRel();
 		add(detail);

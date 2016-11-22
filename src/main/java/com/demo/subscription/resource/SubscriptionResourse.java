@@ -2,15 +2,14 @@ package com.demo.subscription.resource;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.demo.subscription.controller.SubscriptionController;
 import com.demo.subscription.model.Subscription;
-import com.demo.subscription.model.SubscriptionMessageType;
 
 public class SubscriptionResourse extends ResourceSupport {
 
@@ -29,12 +28,10 @@ public class SubscriptionResourse extends ResourceSupport {
 	
 	public List<MessageTypeResource> getMessageTypes() {
 	
-		List<MessageTypeResource> messageTypes = new ArrayList<>();
-		
-		for (SubscriptionMessageType s : subscription.getSubscriptionMessageTypes()) {
-			messageTypes.add(new MessageTypeResource(s.getMessageType(), s.getCounter()));
-		}
-		
+		List<MessageTypeResource> messageTypes = subscription.getSubscriptionMessageTypes()
+												 .stream()
+												 .map(s -> new MessageTypeResource(s.getMessageType(), s.getCounter()))
+												 .collect(Collectors.toList());
 		return messageTypes;
 	}
 }

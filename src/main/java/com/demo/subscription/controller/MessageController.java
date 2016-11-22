@@ -29,13 +29,13 @@ public class MessageController {
 	@RequestMapping(method = RequestMethod.POST)
     public void post(@RequestBody Message message) {
 		
-		for (Long id : message.getMessageTypeIds()) {
+		message.getMessageTypeIds().forEach(id -> {
 			List<Subscription> subscriptions = repository.findByMessageType(id);
-			subscriptions.stream().forEach(s ->{
+			subscriptions.stream().forEach(s -> {
 				s.increamentMessageCounter(id);
 				repository.save(s);
 			});
-		}
+		});	
 		
 		messageSender.sendMessage(message);
 	}

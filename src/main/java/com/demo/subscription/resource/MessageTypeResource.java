@@ -32,4 +32,8 @@ public class MessageTypeResource extends ResourceSupport {
 	public int getMessageCount() {
 		return messageCount;
 	}
+	
+	public static MessageTypeResource as(final MessageType messageType) {
+		return new MessageTypeResource(messageType, 0);
+	}
 }

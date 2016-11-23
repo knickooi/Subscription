@@ -4,16 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.subscription.model.MessageType;
 import com.demo.subscription.repo.MessageTypeRepository;
 
 @RestController @RequestMapping("messagetype")
-public class MessageTypeController {
+public class MessageTypeController extends BaseController<MessageType, Long> {
 	
-	private final MessageTypeRepository messageTypeRepository;
-
 	@Autowired
 	public MessageTypeController(final MessageTypeRepository messageTypeRepository) {
-		this.messageTypeRepository = messageTypeRepository;
+		super(messageTypeRepository);
 	}
-
 }

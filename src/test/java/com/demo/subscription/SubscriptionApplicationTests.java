@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 import com.demo.subscription.model.MessageType;
-import com.demo.subscription.resource.SubscriptionResourse;
+import com.demo.subscription.resource.SubscriptionResource;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -71,4 +71,10 @@ public class SubscriptionMessageType {
 	public void incrementCounter() {
 		counter++;
 	}
+
+	@Override
+	public String toString() {
+		return "SubscriptionMessageType [id=" + id + ", messageType=" + messageType
+				+ ", counter=" + counter + "]";
+	}
 }

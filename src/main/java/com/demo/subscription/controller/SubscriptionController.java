@@ -3,6 +3,8 @@ package com.demo.subscription.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.MediaType;
@@ -15,71 +17,60 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.subscription.model.Subscription;
 import com.demo.subscription.repo.MessageTypeRepository;
 import com.demo.subscription.repo.SubscriptionRepository;
-import com.demo.subscription.resource.SubscriptionResourse;
+import com.demo.subscription.resource.SubscriptionResource;
 
 @RestController @RequestMapping("subscription")
 @ExposesResourceFor(Subscription.class)
-public class SubscriptionController {
+public class SubscriptionController extends BaseController<Subscription, Long> {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SubscriptionController.class);
 
-	private final SubscriptionRepository repository;
+	@Autowired
 	private final MessageTypeRepository messageTypeRepository; 
 	
 	@Autowired
-	public SubscriptionController(final SubscriptionRepository repository, MessageTypeRepository messageTypeRepository) {
-		this.repository = repository;
+	public SubscriptionController(final SubscriptionRepository repository, final MessageTypeRepository messageTypeRepository) {
+		super(repository);
 		this.messageTypeRepository = messageTypeRepository;
 	}
-
-    @RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public SubscriptionResourse get(@PathVariable Long id) {
-    	
-    	Subscription subscription = repository.findOne(id);
-    	SubscriptionResourse resource = new SubscriptionResourse(subscription);
-    	
-    	return resource;
-    }
+	
+	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	public SubscriptionResource getById(@PathVariable Long id) {
+		return SubscriptionResource.as(repository().findOne(id));
+	}
     
-    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public List<SubscriptionResourse> list() {
-    	
-    	List<Subscription> list = repository.findAll();
-    	List<SubscriptionResourse> resources = list.stream().map(SubscriptionResourse::new).collect(Collectors.toList());
-    	
-    	return resources;
+	@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    protected List<SubscriptionResource> list() {
+    	return repository().findAll().stream().map(SubscriptionResource::new).collect(Collectors.toList());
     }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public SubscriptionResourse register(@RequestBody List<Long> messageTypeIds) {
+	
+	@RequestMapping(method = RequestMethod.POST)
+    public SubscriptionResource register(@RequestBody List<Long> messageTypeIds) {
     	
     	Subscription subscription = new Subscription();
-    	
     	messageTypeIds.stream().map(messageTypeRepository::findOne).forEach(subscription::addMessageType);
     	
-    	repository.save(subscription);
+    	repository().save(subscription);
     	
-    	SubscriptionResourse resource = new SubscriptionResourse(subscription);
-
-    	return resource;
+    	return SubscriptionResource.as(subscription);
     }
-
+    
     @RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public SubscriptionResourse updateById(@PathVariable("id") Long id, @RequestBody List<Long> messageTypeIds) {
+    public SubscriptionResource updateById(@PathVariable("id") Long id, @RequestBody List<Long> messageTypeIds) {
     	
-    	Subscription subscription = repository.findOne(id);
+    	Subscription subscription = repository().findOne(id);
     	subscription.removeSubscriptionMessageTypes();
-    	repository.saveAndFlush(subscription);
+    	repository().saveAndFlush(subscription);
     	
     	messageTypeIds.stream().map(messageTypeRepository::findOne).forEach(subscription::addMessageType);
     	
-    	repository.save(subscription);
+    	repository().save(subscription);
     	
-    	SubscriptionResourse resource = new SubscriptionResourse(subscription);
-    	
-    	return resource;
+    	return SubscriptionResource.as(subscription);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable Long id) {
-    	repository.delete(id);
+    	repository().delete(id);
     }
 }

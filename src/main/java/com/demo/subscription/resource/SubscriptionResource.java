@@ -11,11 +11,11 @@ import org.springframework.hateoas.ResourceSupport;
 import com.demo.subscription.controller.SubscriptionController;
 import com.demo.subscription.model.Subscription;
 
-public class SubscriptionResourse extends ResourceSupport {
+public class SubscriptionResource extends ResourceSupport {
 
 	private Subscription subscription;
 	 
-	public SubscriptionResourse(final Subscription subscription) {
+	public SubscriptionResource(final Subscription subscription) {
 		this.subscription = subscription;
 		
 		Link detail = linkTo(SubscriptionController.class).slash(getSubscriptionId()).withSelfRel();
@@ -33,5 +33,9 @@ public class SubscriptionResourse extends ResourceSupport {
 												 .map(s -> new MessageTypeResource(s.getMessageType(), s.getCounter()))
 												 .collect(Collectors.toList());
 		return messageTypes;
+	}
+	
+	public static SubscriptionResource as(final Subscription subscription) {
+		return new SubscriptionResource(subscription);
 	}
 }

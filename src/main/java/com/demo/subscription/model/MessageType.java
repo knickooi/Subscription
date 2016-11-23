@@ -13,10 +13,6 @@ public class MessageType {
 	private Long id;
 	private String name;
 	
-//	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//	@JoinColumn(name="SUBSCRIPTION_ID")
-//	private Subscription subscription;
-	
 	public MessageType() {}
 	
 	public MessageType(final String name) {
@@ -37,6 +33,11 @@ public class MessageType {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "MessageType [id=" + id + ", name=" + name + "]";
 	}
 }
 

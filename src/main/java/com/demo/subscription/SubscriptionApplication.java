@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.demo.subscription.controller.SubscriptionController;
-import com.demo.subscription.model.MessageType;
+import com.demo.subscription.domain.MessageType;
 import com.demo.subscription.repo.MessageTypeRepository;
 import com.demo.subscription.repo.SubscriptionRepository;
 

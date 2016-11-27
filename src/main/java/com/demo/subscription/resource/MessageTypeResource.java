@@ -6,7 +6,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.demo.subscription.controller.MessageTypeController;
-import com.demo.subscription.model.MessageType;
+import com.demo.subscription.domain.MessageType;
 
 public class MessageTypeResource extends ResourceSupport {
 	

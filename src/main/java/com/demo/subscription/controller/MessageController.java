@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.subscription.domain.Message;
+import com.demo.subscription.domain.Subscription;
 import com.demo.subscription.message.MessageSender;
-import com.demo.subscription.model.Message;
-import com.demo.subscription.model.Subscription;
 import com.demo.subscription.repo.SubscriptionRepository;
 
 @RestController @RequestMapping("message")

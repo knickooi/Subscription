@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import com.demo.subscription.model.MessageType;
+import com.demo.subscription.domain.MessageType;
 import com.demo.subscription.resource.SubscriptionResource;
 import com.fasterxml.jackson.annotation.JsonCreator;
 

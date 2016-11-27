@@ -9,7 +9,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.demo.subscription.controller.SubscriptionController;
-import com.demo.subscription.model.Subscription;
+import com.demo.subscription.domain.Subscription;
 
 public class SubscriptionResource extends ResourceSupport {
 
@@ -37,5 +37,9 @@ public class SubscriptionResource extends ResourceSupport {
 	
 	public static SubscriptionResource as(final Subscription subscription) {
 		return new SubscriptionResource(subscription);
+	}
+	
+	public static List<SubscriptionResource> as(final List<Subscription> subscription) {
+		return subscription.stream().map(SubscriptionResource::new).collect(Collectors.toList());
 	}
 }

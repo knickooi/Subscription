@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 
-import com.demo.subscription.model.MessageType;
-import com.demo.subscription.model.Subscription;
+import com.demo.subscription.domain.MessageType;
+import com.demo.subscription.domain.Subscription;
 
 @Configuration
 public class RepositoryConfig extends RepositoryRestMvcConfiguration {

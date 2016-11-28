@@ -35,7 +35,7 @@ public class MessageController {
 				s.increamentMessageCounter(id);
 				repository.save(s);
 			});
-		});	
+		});
 		
 		messageSender.sendMessage(message);
 	}

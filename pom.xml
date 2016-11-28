@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.demo.subscription</groupId>
-	<artifactId>messaging</artifactId>
-	<version>0.0.1</version>
+	<artifactId>subscription</artifactId>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>Subscription</name>

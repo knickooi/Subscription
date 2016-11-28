@@ -1,7 +1,6 @@
 package com.demo.subscription.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,6 +85,6 @@ public class Subscription {
 
 	@Override
 	public String toString() {
-		return "Subscription [id=" + id + ", subscriptionMessageTypes=" + subscriptionMessageTypes + "]";
+		return "Subscription [id=" + id + ", MessageTypes=" + getMessageTypes() + "]";
 	}
 }
